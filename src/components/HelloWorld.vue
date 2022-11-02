@@ -1,130 +1,188 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex"
-          target="_blank"
-          rel="noopener"
-          >vuex</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+  <div>
+    <div class="box">
+      <div class="header">
+        <span>新手引导</span>
+        <button class="btn">X</button>
+      </div>
+      <div class="body-content">{{ content }}</div>
+      <div class="footer">
+        <span class="button-footer">
+          <button type="button" class="cancel" @click="cancel">
+            <span>取消</span>
+          </button>
+          <button type="button" class="confirm" @click="confirm">
+            <span>确定</span>
+          </button>
+        </span>
+      </div>
+    </div>
+    <!-- 确认框 -->
+    <div class="box-confirm" v-if="false">
+      <div class="body-content-confirm">{{ content }}</div>
+      <div class="footer">
+        <span class="button-footer">
+          <button type="button" class="cancel" @click="cancel">
+            <span>取消</span>
+          </button>
+          <button type="button" class="confirm" @click="confirm">
+            <span>确定</span>
+          </button>
+        </span>
+      </div>
+    </div>
+    <!-- 确认框 -->
   </div>
 </template>
-
 <script>
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
+  data() {
+    return {
+      active: 0,
+      content: "",
+      dialogVisible: true,
+    };
+  },
+  created() {
+    this.content = "第一步rrrrr";
+    console.log(this.$store.state.counter);
+  },
+  watch: {
+    "$store.state.counter"(newVal) {
+      if (newVal == 2) {
+        this.content = "第二步rrrrr";
+      }
+    },
+    immediate: true,
+  },
+  methods: {
+    confirm() {
+      this.$store.commit("changeNumber");
+    },
+    cancel() {
+      this.$store.commit("resetNumber");
+    },
   },
 };
 </script>
+<style>
+.box {
+  width: 500px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+  box-sizing: border-box;
+}
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+.box-confirm {
+  position: absolute;
+  top: 40px;
+  width: 500px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+  box-sizing: border-box;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.header {
+  /* background: green; */
+  display: flex;
+  padding: 20px 20px 10px;
 }
-li {
+.body-content {
+  background: orange;
+  height: 100px;
+  padding: 30px 20px;
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.body-content-confirm {
+  background: orange;
+  height: 20px;
+  padding: 30px 20px;
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+}
+.footer {
+  /* background: pink; */
+  padding: 10px 20px 20px;
+  text-align: right;
+  box-sizing: border-box;
+  text-align: right;
+}
+.cancel {
+  margin-right: 10px;
   display: inline-block;
-  margin: 0 10px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  /* margin: 0; */
+  transition: 0.1s;
+  font-weight: 500;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 4px;
 }
-a {
-  color: #42b983;
+.confirm {
+  margin-left: 10px;
+  color: #fff;
+  background-color: #409eff;
+  border-color: #409eff;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  /* background: #fff; */
+  border: 1px solid #dcdfe6;
+  -webkit-appearance: none;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  /* margin: 0; */
+  transition: 0.1s;
+  font-weight: 500;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.cancel:hover {
+  color: #409eff;
+  border-color: #c6e2ff;
+  background-color: #ecf5ff;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: auto;
+  width: 18px;
+  color: #909399;
+  font-size: 10px;
+  height: 16px;
+}
+.btn:hover {
+  color: #409eff;
+}
+.confirm:hover {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
 }
 </style>
