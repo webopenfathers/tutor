@@ -3,23 +3,9 @@
     <div class="box">
       <div class="header">
         <span>新手引导</span>
-        <button class="btn">X</button>
+        <button class="btn" @click="close">X</button>
       </div>
       <div class="body-content">{{ content }}</div>
-      <div class="footer">
-        <span class="button-footer">
-          <button type="button" class="cancel" @click="cancel">
-            <span>取消</span>
-          </button>
-          <button type="button" class="confirm" @click="confirm">
-            <span>确定</span>
-          </button>
-        </span>
-      </div>
-    </div>
-    <!-- 确认框 -->
-    <div class="box-confirm" v-if="false">
-      <div class="body-content-confirm">{{ content }}</div>
       <div class="footer">
         <span class="button-footer">
           <button type="button" class="cancel" @click="cancel">
@@ -60,12 +46,16 @@ export default {
       this.$store.commit("changeNumber");
     },
     cancel() {
-      this.$store.commit("resetNumber");
+      this.$router.push("/");
+    },
+    close() {
+      console.log("关闭事件");
+      this.$emit("close");
     },
   },
 };
 </script>
-<style>
+<style scoped>
 .box {
   width: 500px;
   background: #fff;
@@ -74,15 +64,6 @@ export default {
   box-sizing: border-box;
 }
 
-.box-confirm {
-  position: absolute;
-  top: 40px;
-  width: 500px;
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
-  box-sizing: border-box;
-}
 .header {
   /* background: green; */
   display: flex;
@@ -91,15 +72,6 @@ export default {
 .body-content {
   background: orange;
   height: 100px;
-  padding: 30px 20px;
-  color: #606266;
-  font-size: 14px;
-  word-break: break-all;
-}
-
-.body-content-confirm {
-  background: orange;
-  height: 20px;
   padding: 30px 20px;
   color: #606266;
   font-size: 14px;
@@ -166,6 +138,12 @@ export default {
   background-color: #ecf5ff;
 }
 
+.confirm:hover {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
+
 .btn {
   background: transparent;
   border: none;
@@ -179,10 +157,5 @@ export default {
 }
 .btn:hover {
   color: #409eff;
-}
-.confirm:hover {
-  background: #66b1ff;
-  border-color: #66b1ff;
-  color: #fff;
 }
 </style>
