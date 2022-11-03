@@ -1,30 +1,32 @@
 <template>
   <div class="home">
-    <!-- 遮罩 -->
-    <div
-      :class="{ mark: markB, 'com-mark': dialog }"
-      v-if="$route.query.boot"
-    ></div>
-    <!-- 图片 -->
-    <img
-      :src="srcList[active]"
-      :class="{
-        'com-mark': dialog,
-        oneStep: active === 0,
-        twoStep: active === 1,
-      }"
-    />
-    <!-- 图片 -->
-    <!-- 遮罩 -->
-    <!-- 引导组件  -->
-    <hello-world
-      @close="close"
-      :class="{
-        'hello-world': active === 0,
-        'two-hello': active === 1,
-      }"
-    />
-    <!-- 引导组件  -->
+    <div v-if="$route.query.boot">
+      <!-- 遮罩 -->
+      <div
+        :class="{ mark: markB, 'com-mark': dialog }"
+        v-if="$route.query.boot"
+      ></div>
+      <!-- 图片 -->
+      <img
+        :src="srcList[active]"
+        :class="{
+          'com-mark': dialog,
+          oneStep: active === 0,
+          twoStep: active === 1,
+        }"
+      />
+      <!-- 图片 -->
+      <!-- 遮罩 -->
+      <!-- 引导组件  -->
+      <hello-world
+        @close="close"
+        :class="{
+          'hello-world': active === 0,
+          'two-hello': active === 1,
+        }"
+      />
+      <!-- 引导组件  -->
+    </div>
     <!-- 内容 -->
     <div class="list-box">
       <div v-for="(item, index) in textArr" class="list-box-item" :key="index">
