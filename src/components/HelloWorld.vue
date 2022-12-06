@@ -16,6 +16,13 @@
           </button>
         </span>
       </div>
+      <div
+        class="arrow"
+        :class="{
+          'arrow-left': arrow === 'left',
+          'arrow-top': arrow === 'top',
+        }"
+      ></div>
     </div>
     <!-- 确认框 -->
   </div>
@@ -29,6 +36,10 @@ export default {
       dialogVisible: true,
     };
   },
+  props: {
+    arrow: String,
+  },
+
   created() {
     this.content = "第一步rrrrr";
     console.log(this.$store.state.counter);
@@ -38,6 +49,10 @@ export default {
       if (newVal == 2) {
         this.content = "第二步rrrrr";
       }
+    },
+
+    arrow(newVal) {
+      console.log(newVal);
     },
     immediate: true,
   },
@@ -157,5 +172,24 @@ export default {
 }
 .btn:hover {
   color: #409eff;
+}
+
+/* -------------------------------- */
+.arrow {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 10px solid transparent; /*以下四个样式对应四种三角形，任选其一即可实现*/
+  border-bottom-color: red;
+}
+.arrow-left {
+  top: 29px;
+  left: -20px;
+  transform: rotate(-90deg);
+}
+
+.arrow-top {
+  top: -20px;
+  left: 10px;
 }
 </style>

@@ -20,6 +20,7 @@
       <!-- 引导组件  -->
       <hello-world
         @close="close"
+        :arrow="arrow"
         :class="{
           'hello-world': active === 0,
           'two-hello': active === 1,
@@ -61,6 +62,7 @@ export default {
   },
   data() {
     return {
+      arrow: "left",
       dialog: false,
       markB: true,
       content: true,
@@ -78,7 +80,16 @@ export default {
     };
   },
   mounted() {},
-
+  watch: {
+    "$store.state.counter"(newVal) {
+      if (newVal === 0) {
+        this.arrow = "left";
+      } else {
+        this.arrow = "top";
+      }
+    },
+    immediate: true,
+  },
   computed: {
     active() {
       this.fn();
